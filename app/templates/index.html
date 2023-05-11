@@ -1,0 +1,47 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Trang chủ{% endblock %}
+
+{% block content %}
+    <div id="banner">
+        <div class="box-left">
+            <h2>
+                <span>THẾ GIỚI MÁY TÍNH</span>
+            </h2>
+            <p>Chuyên cung cấp các sản phẩm<br>dành riêng cho chiếc máy tính của bạn
+                <br>NHANH - HIỆU QUẢ - CHUẨN XÁC</p>
+        </div>
+        <div class="box-right">
+            <img src="static/images/img_1.jpg" alt="">
+            <img src="static/images/img_3.jpg" alt="">
+            <img src="static/images/img_2.jpg" alt="">
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            {% if sanphams %}
+                {% for p in sanphams %}
+                <div class="col-md-3 col-xs-12" style="padding: 5px">
+                    <div class="card" style="padding: 5px">
+                        <img class="card-img-top" src="{{ url_for('static', filename=p.Hinh) }}" alt="{{ p.TenSP }}">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ p.TenSP }}</h4>
+                            <p class="card-text">{{ "{:,.1f}".format(p.Gia) }} VND</p>
+                            <a href="/" class="btn btn-primary" onclick="addToCart({{ p.id }}, '{{ p.TenSP }}', {{ p.Gia }})">Đặt hàng</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <p><i>Không có sản phẩm nào!!!</i></p>
+            {% endif %}
+        </div>
+        {% if pages > 1 %}
+        <ul class="pagination">
+            {% for idx in range(1, pages+1) %}
+            <li class="page-item"><a class="page-link" href="{{ url_for('home', page=idx) }}">{{ idx }}</a></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+{% endblock %}

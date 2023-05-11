@@ -1,0 +1,15 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Đăng ký{% endblock %}
+
+{% block content %}
+<h1 class="text-center text-danger">XÁC THỰC OTP</h1>
+<div class="container">
+<form action="{{ url_for('validate') }}" method="post">
+  <h4>Mã OTP đã được gửi về Email của bạn, vui lòng nhập OTP để xác thực</h4>
+  Mã OTP: <input type="text" name="otp">
+  <input type="submit" value="Gửi">
+</form>
+</div>
+<br><br>
+{% endblock %}

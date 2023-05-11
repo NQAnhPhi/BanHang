@@ -1,0 +1,30 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Đăng nhập{% endblock %}
+
+{% block content %}
+<h1 class="text-center text-danger">ĐĂNG NHẬP NGƯỜI DÙNG</h1>
+
+{% if err_msg %}
+<div class="container">
+    <div class="alert alert-danger">
+        <h4>{{ err_msg }}</h4>
+    </div>
+</div>
+{% endif %}
+
+<div class="container" style="padding-left:250px">
+    <form method="post" action="{{ url_for('user_signin') }}">
+        <div class="form-group">
+            <label for="username">Tài khoản</label>
+            <input type="text" class="form-control" id="username" name="UserName" style="width:600px" required>
+        </div>
+        <div class="form-group">
+            <label for="pass">Mật khẩu</label>
+            <input type="password" class="form-control" id="pass" name="Password" style="width:600px" required>
+        </div>
+        <input type="submit" value="Đăng nhập" class="btn btn-danger" />
+    </form>
+    <br><br>
+</div>
+{% endblock %}

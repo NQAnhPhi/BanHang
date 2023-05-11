@@ -1,0 +1,51 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Giỏ hàng{% endblock %}
+
+{% block content %}
+<h1 class="text-center text-danger">Giỏ hàng của bạn</h1>
+
+{% if 'cart' in session and session['cart'] %}
+<div class="container">
+    <table class="table">
+        <tr>
+            <td>Mã sản phẩm</td>
+            <td>Tên sản phẩm</td>
+            <td>Đơn giá</td>
+            <td>Số lượng</td>
+        </tr>
+        {% for c in session['cart'].values() %}
+        <tr id="product{{ c.id }}">
+            <td>{{ c.id }}</td>
+            <td>{{ c.TenSP }}</td>
+            <td>{{ c.Gia }}</td>
+            <td>
+                <div class="form-group">
+                    <input type="number" min="1" value="{{ c.quantity }}"
+                           onblur="updateCart({{ c.id }}, this)" class="form-control">
+                </div>
+            </td>
+            <td>
+                <input type="button" onclick="deleteCart({{ c.id }})" value="Xóa" class="btn btn-danger">
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="alert alert-info">
+        <h5>Tổng sản phẩm: <span class="cart-counter">{{ stats.total_quantity }}</span></h5>
+        <h5>Tổng số tiền: <span id="total-amount">{{ "{:,.1f}".format(stats.total_amount) }}</span> VND</h5>
+    </div>
+    {% if current_user.is_authenticated %}
+    <input type="button" value="Thanh toán" class="btn btn-success" onclick="pay()"/>
+    {% else %}
+    <a href="{{ url_for('user_signin')}}">Đăng nhập để thanh toán !</a>
+    {% endif %}
+</div>
+<br>
+<br>
+{% else %}
+<p class="text-danger"><i>Không có sản phẩm nào trong giỏ !!!</i></p>
+
+{% endif %}
+{% endblock %}
